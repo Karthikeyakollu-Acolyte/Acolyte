@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { FabricCanvas } from '@/components/canvas/FabricCanvas';
 import { useParams } from 'next/navigation';
 
-import {} from ""
 
 import { TransformWrapper, TransformComponent, MiniMap } from "react-zoom-pan-pinch";
 import { useSettings } from '@/context/SettingsContext'

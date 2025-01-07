@@ -4,15 +4,18 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { Sidebar } from './sidebar';
 import Image from 'next/image';
-import emojis from '../../public/emojis.svg'
-import paperclip from '../../public/paperclip.svg'
-import send from '../../public/send.svg'
+import emojis from '../../public/emojis.svg';
+import paperclip from '../../public/paperclip.svg';
+import send from '../../public/send.svg';
 import { motion } from 'framer-motion';
+import { TextEffect } from '../ui/text-effect';
 
 interface Message {
   id: number;
   text: string;
   sender: 'user' | 'bot';
+  name: string;
+  avatar: string;
 }
 
 export function ChatInterface() {
@@ -27,7 +30,12 @@ export function ChatInterface() {
     'What is the "old implicit compact" mentioned in the text?',
     "Who are the authors of the text?"
   ];
-  const dummy = "While invertebrate brains arise from paired segmental ganglia (each of which is only responsible for the respective body segment) of the ventral nerve cord, vertebrate brains develop axially from the midline dorsal nerve cord as a vesicular enlargement at the rostral end of the neural tube, with centralized control over all body segments. All vertebrate brains can be embryonically divided into three parts: the forebrain (prosencephalon, subdivided into telencephalon and diencephalon), midbrain (mesencephalon) and hindbrain (rhombencephalon, subdivided into metencephalon and myelencephalon). The spinal cord, which directly interacts with somatic functions below the head, can be considered a caudal extension of the myelencephalon enclosed inside the vertebral column. Together, the brain and spinal cord constitute the central nervous system in all vertebrates."
+
+  const dummy = "While invertebrate brains arise from paired segmental ganglia..."; // Shortened for brevity.
+
+  const userAvatar = "https://via.placeholder.com/150/0000FF/808080?Text=User+Avatar";
+  const botAvatar = "https://via.placeholder.com/150/FF0000/FFFFFF?Text=Bot+Avatar";
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -36,7 +44,7 @@ export function ChatInterface() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(scrollToBottom, [messages]); // Scroll to bottom when messages change
 
   const handleSendMessage = () => {
     if (inputMessage.trim() === '') return;
@@ -45,6 +53,8 @@ export function ChatInterface() {
       id: Date.now(),
       text: inputMessage,
       sender: 'user',
+      name: 'You',
+      avatar: '', // Example avatar path
     };
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -56,9 +66,16 @@ export function ChatInterface() {
         id: Date.now(),
         text: `I'm a simulated response to: "${dummy}"`,
         sender: 'bot',
+        name: 'Bot',
+        avatar: '', // Example bot avatar path
       };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     }, 1000);
+  };
+
+  const resetChat = () => {
+    setMessages([]);
+    setInputMessage('');
   };
 
   return (
@@ -73,16 +90,17 @@ export function ChatInterface() {
       </Button>
 
       <div
-        className={`flex flex-1 flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? "ml-[420px]" : "ml-0"
-          }`}
+        className={`flex flex-1 flex-col transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? "ml-[420px]" : "ml-0"
+        }`}
       >
-        <div className="flex flex-col items-center justify-start h-full px-4 max-w-full text-center overflow-y-auto ">
+        <div className="flex flex-col items-center justify-start h-full px-4 max-w-full text-center overflow-hidden">
           {messages.length === 0 ? (
-            <div className='my-auto'>
-              <h2 className="text-[2.5rem] font-rubik font-medium leading-tight mb-4 text-transparent bg-gradient-to-r from-[#8468D0] to-[#000000] bg-clip-text">
+            <div className="my-auto">
+              <h2 className="text-[3.5rem] font-rubik font-medium leading-tight mb-4 text-transparent bg-gradient-to-r from-[#8468D0] to-[#000000] bg-clip-text">
                 Hello, to be Doctor.
               </h2>
-              <p className="text-[1.75rem] font-rubik font-medium mb-8 text-transparent bg-gradient-to-r from-[#010101] to-[#38A169] bg-clip-text">
+              <p className="text-[3.5rem] font-rubik font-medium mb-8 text-transparent bg-gradient-to-r from-[#010101] to-[#38A169] bg-clip-text">
                 How can I be your companion
               </p>
 
@@ -99,31 +117,50 @@ export function ChatInterface() {
               </div>
             </div>
           ) : (
-            <div className="w-full max-w-full  pt-20">
+            <div className="flex-1 max-h-[809px] w-full max-w-full pt-10 pb-5 px-8 mt-3 overflow-scroll scrollbar-hidden">
               {messages.map((message) => (
-                <div
+                <motion.div
                   key={message.id}
-                  className={`mb-4 p-4 mx-24 rounded-lg shadow-md ${message.sender === 'user'
-                    ? 'bg-blue-100 text-right ml-auto max-w-[80%]'
-                    : 'bg-gray-100 text-left mr-auto max-w-[80%]'
-                    }`}
+                  className={`mb-4 p-4 rounded-lg shadow-md relative ${
+                    message.sender === "user"
+                      ? "bg-blue-100 text-right ml-auto max-w-[80%]"
+                      : "bg-gray-100 text-left mr-auto max-w-[80%]"
+                  }`}
+                  style={{
+                    maxWidth: '70%',
+                    width: 'fit-content',
+                  }}
+                  initial={{ height: 0 }}
+                  animate={{ height: "auto" }}
+                  transition={{ duration: 0.5 }}
                 >
-                  {message.sender !== 'user' ? (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <div className=''>{message.text}</div>
-                    </motion.div>
-                  ) : (
-                    <div>{message.text}</div>
-                  )}
-                </div>
+                  {/* Avatar and name outside of the message box */}
+                  <div
+                    className={`absolute ${message.sender === "user" ? "right-0" : "left-0"} top-[-25px] flex items-center gap-2`}
+                    style={{ zIndex: 1 }}
+                  >
+                    <Image
+                      alt={message.name}
+                      src={message.avatar}
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <p className="text-sm text-gray-600">{message.name}</p>
+                  </div>
+
+                  {/* Message content */}
+                  <TextEffect
+                    per="char"
+                    preset="fade-in-blur"
+                    speedReveal={3}
+                    delay={0.1}
+                    className="inline-block text-black mt-8"
+                  >
+                    {message.text}
+                  </TextEffect>
+                </motion.div>
               ))}
               <div ref={messagesEndRef} />
             </div>
-
           )}
         </div>
 
@@ -135,7 +172,7 @@ export function ChatInterface() {
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleSendMessage();
               }
             }}
@@ -151,14 +188,12 @@ export function ChatInterface() {
       </div>
 
       <div
-        className={`absolute top-0 left-0 h-full transition-all duration-300 ease-in-out ${isSidebarOpen
-          ? "translate-x-0 opacity-100"
-          : "-translate-x-full opacity-0 pointer-events-none"
-          }`}
+        className={`absolute top-0 left-0 h-full transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0 pointer-events-none"
+        }`}
       >
-        <Sidebar />
+        <Sidebar resetChat={resetChat} />
       </div>
     </div>
   );
 }
-
