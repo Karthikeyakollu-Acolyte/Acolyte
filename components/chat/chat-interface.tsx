@@ -141,8 +141,10 @@ export function ChatInterface() {
                   >
                     <Image
                       alt={message.name}
-                      src={message.avatar}
+                      src={message.name==="Bot"?botAvatar:userAvatar}
                       className="w-8 h-8 rounded-full"
+                      width={10}
+                      height={10}
                     />
                     <p className="text-sm text-gray-600">{message.name}</p>
                   </div>
