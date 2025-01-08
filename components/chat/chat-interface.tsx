@@ -8,7 +8,7 @@ import emojis from '../../public/emojis.svg';
 import paperclip from '../../public/paperclip.svg';
 import send from '../../public/send.svg';
 import { motion } from 'framer-motion';
-import { TextEffect } from '../ui/text-effect';
+import { TextGenerateEffect } from "../ui/text-generate-effect";
 
 interface Message {
   id: number;
@@ -64,7 +64,7 @@ export function ChatInterface() {
     setTimeout(() => {
       const botResponse: Message = {
         id: Date.now(),
-        text: `I'm a simulated response to: "${dummy}"`,
+        text: `I'm a simulated response to The log should provide more details about what exactly caused the error. Look for additional lines that describe what was happening before the EBUSY error. There could be useful context about file locks, processes in use, or other underlying issues.: "${dummy}"`,
         sender: 'bot',
         name: 'Bot',
         avatar: '', // Example bot avatar path
@@ -150,15 +150,7 @@ export function ChatInterface() {
                   </div>
 
                   {/* Message content */}
-                  <TextEffect
-                    per="char"
-                    preset="fade-in-blur"
-                    speedReveal={3}
-                    delay={0.1}
-                    className="inline-block text-black mt-8"
-                  >
-                    {message.text}
-                  </TextEffect>
+                  <TextGenerateEffect words={message.text}/>
                 </motion.div>
               ))}
               <div ref={messagesEndRef} />
