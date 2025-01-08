@@ -2,14 +2,10 @@
 import React, { useEffect, useRef, useState } from "react";
 // import { PdfViewer } from "./PdfViewer";
 import type { PDFDocumentProxy } from "pdfjs-dist";
-import Toolbar from "../toolbar/Toolbar";
 import { CanvasWrapper } from "../canvas/CanvasWrapper"
 // import { PDFViewerComponent } from "../Test";
 import { PdfViewerComponent } from "./pdfViewerTest";
 
-import PdfViewer from "./Test";
-import DragAndDropTool from "../toolbar/ DragAndDropTool";
-import { SimpleNote } from "../canvas/customComponents/SimpleNote";
 import { useSettings } from "@/context/SettingsContext";
 interface PdfHighlighterProps {
     pdfDocument: PDFDocumentProxy;

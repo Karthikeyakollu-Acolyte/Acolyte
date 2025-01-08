@@ -11,6 +11,34 @@ const page = (props: Props) => {
     const fabricCanvas = useRef<fabric.Canvas | null>(null);
     const [rect, setRect] = useState<{ width: number, height: number }>({ width: 800, height: 900 })
 
+
+    async function getModelResponse(question: string) {
+        try {
+            const response = await fetch('/api/model', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Ensure content is sent as JSON
+                },
+                body: JSON.stringify({
+                    question: question, // Send the dynamic question to the backend
+                }),
+            });
+
+            const result = await response.json();
+
+            if (result.data) {
+                // Print the model response content (assuming the response structure is the same)
+                console.log('Model Response Content:', result.data.choices[0]?.message?.content);
+            } else {
+                console.error('Error:', result.error);
+            }
+        } catch (error) {
+            console.error('Request failed:', error);
+        }
+    }
+
+
+
     useEffect(() => {
         if (!fabricCanvas.current) return
 
@@ -22,7 +50,7 @@ const page = (props: Props) => {
             fill: "#ffeb3b", // Background color (similar to sticky notes)
             rx: 10, // Rounded corners (horizontal radius)
             ry: 10, // Rounded corners (vertical radius)
-            selectable:true,
+            selectable: true,
             shadow: {
                 color: "rgba(0,0,0,0.3)",
                 blur: 10,
@@ -30,15 +58,13 @@ const page = (props: Props) => {
                 offsetY: 5,
             },
         });
-        
+
         fabricCanvas.current.add(rectObj)
     }, [fabricCanvas.current])
     return (
         <div >
 
-            <canvas className='border-2 m-6' ref={canvasRef} ></canvas>
-            <CanvasInitializer canvasRef={canvasRef} fabricCanvas={fabricCanvas} rect={rect} />
-
+            <button onClick={()=>{getModelResponse("How are you")}}>get tespone</button>
 
         </div>
     )
