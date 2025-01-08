@@ -16,6 +16,7 @@ interface Message {
   sender: 'user' | 'bot';
   name: string;
   avatar: string;
+  time: string; // Add time property
 }
 
 export function ChatInterface() {
@@ -55,6 +56,7 @@ export function ChatInterface() {
       sender: 'user',
       name: 'You',
       avatar: '', // Example avatar path
+      time: new Date().toLocaleTimeString(), // Get the current time
     };
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -65,9 +67,10 @@ export function ChatInterface() {
       const botResponse: Message = {
         id: Date.now(),
         text: `I'm a simulated response to The log should provide more details about what exactly caused the error. Look for additional lines that describe what was happening before the EBUSY error. There could be useful context about file locks, processes in use, or other underlying issues.: "${dummy}"`,
-        sender: 'bot',
-        name: 'Bot',
+        sender: 'acolyte',
+        name: 'Acolyte',
         avatar: '', // Example bot avatar path
+        time: new Date().toLocaleTimeString(), // Get the current time
       };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     }, 1000);
@@ -90,9 +93,7 @@ export function ChatInterface() {
       </Button>
 
       <div
-        className={`flex flex-1 flex-col transition-all duration-300 ease-in-out ${
-          isSidebarOpen ? "ml-[420px]" : "ml-0"
-        }`}
+        className={`flex flex-1 flex-col transition-all duration-300 ease-in-out ${isSidebarOpen ? "ml-[420px]" : "ml-0"}`}
       >
         <div className="flex flex-col items-center justify-start h-full px-4 max-w-full text-center overflow-hidden">
           {messages.length === 0 ? (
@@ -136,21 +137,24 @@ export function ChatInterface() {
                 >
                   {/* Avatar and name outside of the message box */}
                   <div
-                    className={`absolute ${message.sender === "user" ? "right-0" : "left-0"} top-[-25px] flex items-center gap-2`}
+                    className={`absolute ${message.sender === "user" ? "-right-8 flex-row-reverse" : "-left-8"} top-[-45px] flex gap-2 items-center`}
                     style={{ zIndex: 1 }}
                   >
                     <Image
                       alt={message.name}
-                      src={message.name==="Bot"?botAvatar:userAvatar}
-                      className="w-8 h-8 rounded-full"
+                      src={message.name === "Acolyte" ? botAvatar : userAvatar}
+                      className="w-10 h-10 rounded-full"
                       width={10}
                       height={10}
                     />
-                    <p className="text-sm text-gray-600">{message.name}</p>
+                    <div className="flex items-center gap-3 w-full text-gray-600 mb-3">
+                      <p className='text-xl'>{message.name}</p>
+                      <p className='text-md'>{message.time}</p> {/* Display time next to the name */}
+                    </div>
                   </div>
 
                   {/* Message content */}
-                  <TextGenerateEffect words={message.text}/>
+                  <TextGenerateEffect words={message.text} />
                 </motion.div>
               ))}
               <div ref={messagesEndRef} />
@@ -182,9 +186,7 @@ export function ChatInterface() {
       </div>
 
       <div
-        className={`absolute top-0 left-0 h-full transition-all duration-300 ease-in-out ${
-          isSidebarOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0 pointer-events-none"
-        }`}
+        className={`absolute top-0 left-0 h-full transition-all duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0 pointer-events-none"}`}
       >
         <Sidebar resetChat={resetChat} />
       </div>

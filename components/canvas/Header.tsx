@@ -16,26 +16,44 @@ import pdfsearch from '@/public/pdfsearch.svg'
 
 interface HeaderProps {
   title?: string
-  lastUpdate?: string
   pages?: number
   annotations?: number
-
 }
 
 export default function Header({
   title = "Heart Analogy",
-  lastUpdate = "25 August 2019 at 12:15 PM",
   pages = 120,
   annotations = 120,
-
 }: HeaderProps) {
   // State to toggle search bar visibility and hold search query
   const [isSearchVisible, setIsSearchVisible] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [lastUpdate, setLastUpdate] = useState("")
 
   // Ref to detect clicks outside the search bar and to focus the input
   const searchBarRef = useRef(null)
   const searchInputRef = useRef<HTMLInputElement | null>(null)
+
+  // Update the last update time dynamically
+  useEffect(() => {
+    const updateLastUpdateTime = () => {
+      const now = new Date()
+      const formattedDate = now.toLocaleString('en-US', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      })
+      setLastUpdate(formattedDate)
+    }
+
+    updateLastUpdateTime()
+    const interval = setInterval(updateLastUpdateTime, 60000) // Update every minute
+
+    return () => clearInterval(interval)
+  }, [])
 
   // Toggle search bar visibility
   const toggleSearch = () => {
@@ -82,7 +100,7 @@ export default function Header({
           <div className="flex items-center justify-center gap-11">
             <span className="text-[20px] text-center">{title}</span>
           </div>
-          <p className="text-[15px] w-[286px] font-rubik text-muted-foreground text-center">
+          <p className="text-[15px] w-[296px] font-rubik text-muted-foreground text-center">
             Last Update: {lastUpdate}
           </p>
         </div>

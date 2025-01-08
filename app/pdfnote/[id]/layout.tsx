@@ -9,6 +9,8 @@ import { RefsProvider } from '@/context/sharedRefs'
 import { ToolProvider } from '@/context/ToolContext'
 import Toolbar from '@/components/toolbar/Toolbar';
 import ToggleInfiniteCanvas from '@/components/canvas/ToggleInfiniteCanvas';
+import PDFViewSelector from '@/components/canvas/pdf-view-selector';
+import PDFCounter from '@/components/canvas/pdf-page-counter';
 export default function Layout({ children }: any) {
     const [isExpanded, setIsExpanded] = useState(true);
     const toggleExpand = () => {
@@ -34,7 +36,11 @@ export default function Layout({ children }: any) {
 
                         <CanvasProvider>
                             < Header />
+                            <PDFViewSelector/>
+                            <PDFCounter/>
+
                             {children}
+                            
                             <ToggleInfiniteCanvas />
                             <Toolbar/>
 
