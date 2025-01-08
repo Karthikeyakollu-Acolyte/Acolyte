@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.17.6",
     "@mui/material": "^6.3.0",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-avatar": "^1.1.2",
@@ -33,7 +34,7 @@
     "konva": "^9.3.16",
     "lucide-react": "^0.462.0",
     "multer": "^1.4.5-lts.1",
-    "next": "^15.1.1",
+    "next": "^14.2.20",
     "pdfjs-dist": "^4.4.168",
     "react": "^19.0.0",
     "react-beautiful-dnd": "^13.1.1",

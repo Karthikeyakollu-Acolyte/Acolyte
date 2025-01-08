@@ -1,3 +1,5 @@
+"use client"
+import { useSettings } from "@/context/SettingsContext";
 import Wrapper from "./Wrapper";
 
 interface ScrollableContentProps {
@@ -11,17 +13,18 @@ export default function ScrollableContent({ isExpanded,id }: ScrollableContentPr
   const scaleFactor = 3.7795275591; // 1mm = 3.7795275591px
   const a4Width = 850;
   const a4Height = 297 * scaleFactor;
+  const {isInfinite} = useSettings()
   
 
   return (
     <div className={`mt-8  transition-all  duration-300 ease-in-out overflow-hidden  ${
-      !isExpanded ? 'w-full' : 'w-full '
+      isInfinite ? 'w-full' : 'w-full '
     }`}>
       <div 
         className="shadow-lg mx-auto overflow-auto scrollbar-hide"
         style={{
-          width: !isExpanded ? '100%' : `${a4Width}px`,
-          height: `1100px`,
+          width: isInfinite? '95%' : `${a4Width}px`,
+          height: `85vh`,
           maxWidth: '100%',
         }}
       >

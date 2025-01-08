@@ -28,16 +28,17 @@ export const PdfHighlighter: React.FC<PdfHighlighterProps> = ({
     const [eventBus] = useState<any>({});
     const divRef = useRef(null);
     const { scale, setScale } = useSettings();
-     const containerNodeRef = useRef<HTMLDivElement>(null);
+    const containerNodeRef = useRef<HTMLDivElement>(null);
 
 
 
     useEffect(() => {
-        const div = divRef.current;
+        const div = divRef.current as HTMLDivElement | null;
         if (!div) return;
 
         let localScale = 1; // Local scale variable to track zoom level
         let zoomTimeout; // Timeout for detecting zoom end
+        div.style.transform = `scale(${scale})`;
 
         const onWheel = (e) => {
             if (e.ctrlKey) {
@@ -66,10 +67,9 @@ export const PdfHighlighter: React.FC<PdfHighlighterProps> = ({
                 // Clear any existing timeout to delay "zoom end" action
                 clearTimeout(zoomTimeout);
 
-                
+
                 // Set a new timeout to trigger the "zoom end" logic
                 zoomTimeout = setTimeout(() => {
-                    console.log("Zoom event ended");
                     setScale(localScale); // Update the global state with the final scale
                 }, 200); // 200ms delay after the last wheel event
             }
@@ -89,13 +89,15 @@ export const PdfHighlighter: React.FC<PdfHighlighterProps> = ({
 
 
     return (
-        <div className="w-full overflow-auto scrollbar-hide relative " ref={divRef} id="pdf-container">
-            {/* <PdfViewer
-                pdfDocument={pdfDocument}
-                pdfScaleValue={pdfScaleValue}
-                onPagesRendered={setPageRects}
-            /> */}
+        <div className="w-full overflow-auto scrollbar-hide relative " ref={divRef} id="pdf-container"
 
+            style={{
+                width: `100%`,
+                height: `${100}%`,
+                maxWidth: '100%',
+            }}
+
+        >
             <PdfViewerComponent
                 pdfDocument={pdfDocument}
                 onPagesRendered={setPageRects}
@@ -103,9 +105,6 @@ export const PdfHighlighter: React.FC<PdfHighlighterProps> = ({
                 containerNodeRef={containerNodeRef}
             />
 
-
-            {/* <PDFViewerComponent pdfDocument={pdfDocument} /> */}
-            {/* <PdfViewer onPagesRendered={setPageRects} /> */}
 
             <CanvasWrapper pageRects={pageRects} isDrawing={isDrawing} containerNodeRef={containerNodeRef} type="pdf" />
 

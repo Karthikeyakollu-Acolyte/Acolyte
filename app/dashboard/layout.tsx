@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { DashHeader } from "@/components/dashboard/DashHeader"
 import { SidebarNav } from "@/components/dashboard/sidebar-nav"
@@ -14,9 +15,6 @@ type Props = {}
 const Layout = ({ children }:any) => {
     return (
         <div>
-
-
-
             <RefsProvider>
                 <ToolProvider>
                     <SettingsProvider>
