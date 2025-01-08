@@ -34,7 +34,7 @@ const people = [
 
 export function Collaborators() {
   return (
-    <div className="flex flex-row items-center justify-center w-[30vw]">
+    <div className="flex flex-row items-center justify-center w-[195px] h-[40px] mr-24 ">
       <AnimatedTooltip items={people} />
       <span className="ml-6 text-purple-600 font-semibold">+2 more</span>
     </div>
