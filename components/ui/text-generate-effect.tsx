@@ -51,8 +51,8 @@ export const TextGenerateEffect = ({
   };
 
   return (
-    <div className={cn( className)}>
-      <div className="mt-4">
+    <div className={cn(className)}>
+      <div className="">
         <div className=" dark:text-white text-black text-[18px] leading-snug tracking-wide">
           {renderWords()}
         </div>
