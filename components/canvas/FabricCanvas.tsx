@@ -268,16 +268,11 @@ export const FabricCanvas = ({
     const canvas: any = fabricCanvas.current;
     if (!canvas || !canvasRef.current) return;
 
-    // canvas.setZoom(scale);
-
-    // Update canvas dimensions to match scaling
-    const newWidth = canvasRef.current.clientWidth * scale;
-    const newHeight = canvasRef.current.clientHeight * scale;
-    // canvas.setDimensions({ width: newWidth, height: newHeight });
+    // canvas.setZoom(2);
 
     canvas.renderAll();
-    // console.log("scale vale in the Fabric canvas", scale)
-  }, [scale]);
+
+  }, []);
 
   // const addImageToCanvas = (imgUrl: string, x: number, y: number) => {
   //   const imgElement = new Image();

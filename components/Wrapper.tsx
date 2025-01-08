@@ -16,6 +16,7 @@ import { Divide } from "lucide-react";
 import { getAllPdfs, deletePdf, getPdfById } from '@/db/pdf/docs';
 import FileUpload from "./dashboard/FileUpload";
 import { useRouter } from 'next/router';
+import ExcalidrawComponent from "./canvas/excalidraw/ExcalidrawComponent";
 
 const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1708.08021";
 
@@ -72,79 +73,21 @@ const Wrapper = ({ id }: { id: string }) => {
     }, [id])  // This should depend on `id` to update `currentDocumentId` when `id` changes.
 
 
-
-    const increaseZoom = () => setZoom(prev => Math.min(prev + 0.1, 3)); // Max zoom level 3
-    const decreaseZoom = () => setZoom(prev => Math.max(prev - 0.1, 0.5)); // Min zoom level 0.5
-
-
-
-
-
     return (
-        <div className="h-screen w-full  overflow-hidden">
-            {/* <input type="file" accept="application/pdf" onChange={handleFileChange} /> */}
-            {/* <button className="border border-1 p-2" onClick={() => { setpages(prev => prev + 1) }}>scroll pages</button> */}
+        <div className="h-screen w-full  ">
             <button onClick={() => { setfirst(!first) }} className="border border-1 p-2  m-2 rounded-md">Toggle</button>
 
-            {/* <div>
-                <button onClick={decreaseZoom} className="border p-2 m-1">-</button>
-                <span>{(zoom * 100).toFixed(0)}%</span>
-                <button onClick={increaseZoom} className="border p-2 m-1">+</button>
-            </div> */}
+
 
             <PdfLoader
                 url={pdfData}
                 file={pdfFile}
                 beforeLoad={<div>Loading...</div>}>
                 {(pdfDocument: PDFDocumentProxy) => (
-                    <div className="h-[90%] w-full overflow-auto flex justify-center "
+                    <div className="h-[100%] w-[100%] overflow-auto flex justify-center"
                         ref={pdfViewerRef} // Reference for zoom functionality
 
                     >
-
-
-                        {/* 
-                        <TransformWrapper
-                            initialScale={1}
-                            initialPositionX={0}
-                            initialPositionY={0}
-                            wheel={{
-                                step: 3,
-                                wheelDisabled: true,
-                                touchPadDisabled: false,
-                                smoothStep: 0.03
-                            }}
-                            panning={{
-                                allowMiddleClickPan: false,
-                                wheelPanning: true,
-                                allowLeftClickPan: false,
-                                allowRightClickPan: false
-                            }}
-                            pinch={{
-                                step: 5
-                            }}
-
-                        >
-                            {({ positionX, positionY, scale }) => (
-                                <>
-                                    <div>
-                                        <TransformComponent>
-                                            <div className="overflow-auto ">
-                                               
-
-                                            </div>
-
-                                        </TransformComponent>
-
-
-                                    </div>
-
-
-                                </>
-                            )}
-
-                        </TransformWrapper> */}
-
 
                         {!first && (
                             <PdfHighlighter
@@ -155,7 +98,7 @@ const Wrapper = ({ id }: { id: string }) => {
 
 
 
-                        {first && <InfiniteCanvas />}
+                        {first && <ExcalidrawComponent id={id} />}
 
                     </div>
                 )}

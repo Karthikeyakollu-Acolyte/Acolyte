@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react'
-import { Pen, Eraser, MousePointer, Settings, Hand, Shapes , Type} from 'lucide-react'
+import { Pen, Eraser, MousePointer, Settings, Hand, Shapes, Type } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import PenOptions from "./options/PenOptions"
@@ -64,7 +64,8 @@ function Toolbar() {
   const closeMenu = () => setIsMenuOpen(false)
 
   return (
-    <Card className="fixed bottom-9 flex items-center gap-3 p-3 border shadow-xl rounded-3xl bg-background font-sans z-999">
+    <Card className="fixed bottom-9 left-1/2 transform -translate-x-1/2 flex items-center gap-3 p-3 border shadow-xl rounded-3xl bg-background font-sans"
+      style={{ zIndex: 100 }}>
       <div className="flex items-center space-x-2">
         {isMenuOpen && (
           (selectedTool === "pen") ||

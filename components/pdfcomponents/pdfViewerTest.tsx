@@ -66,6 +66,7 @@ export const PdfViewerComponent: React.FC<PdfViewerProps> = ({
     
         findControllerRef.current.setDocument(pdfDocument);
         viewerRef.current.setDocument(pdfDocument);
+        viewerRef.current._currentScale=2
     
         // Add empty canvas layers when the pages are initialized
         // eventBus.on("pagesinit", async () => {
@@ -326,10 +327,10 @@ useEffect(() => {
 
                 <div
                     ref={containerNodeRef}
-                    className="pdf-container scrollbar-hide absolute overflow-auto"
+                    className="pdf-container scrollbar-hide absolute overflow-auto bg-black"
                     id="pdf-container"
                 >
-                    <div className="pdfViewer  w-full" id="pdfViewer" />
+                    <div className="pdfViewer  w-full h-full" id="pdfViewer" />
                 </div>
 
     );

@@ -26,6 +26,9 @@ interface SettingsContextType {
   setScale: any;
   currentDocumentId:string;
   setcurrentDocumentId:any;
+  isInfinite:boolean;
+  setIsInfinite:any
+
 
 
 }
@@ -55,8 +58,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedText, setSelectedText] = useState<string | null>(null);
   const [first, setfirst] = useState(false)
-  const [scale, setScale] = useState<number>(1)
+  const [scale, setScale] = useState<number>(0.9)
   const [currentDocumentId, setcurrentDocumentId] = useState<string>("")
+  const [isInfinite, setIsInfinite] = useState<boolean>(false);
 
   const toggleScrollMode = () => {
 
@@ -191,7 +195,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   };
 
   return (
-    <SettingsContext.Provider value={{ scrollMode, toggleScrollMode, scrollToPage, rotateSinglePage, rotateAllPages, currentPage, setCurrentPage, pages, setPages, pageRects, updatePageRects, notes, setNotes, selectedText, setSelectedText, first, setfirst, scale, setScale,currentDocumentId, setcurrentDocumentId }}>
+    <SettingsContext.Provider value={{ scrollMode, toggleScrollMode, scrollToPage, rotateSinglePage, rotateAllPages, currentPage, setCurrentPage, pages, setPages, pageRects, updatePageRects, notes, setNotes, selectedText, setSelectedText, first, setfirst, scale, setScale,currentDocumentId, setcurrentDocumentId,isInfinite, setIsInfinite }}>
       {children}
     </SettingsContext.Provider>
   );

@@ -8,6 +8,7 @@ import { SettingsProvider, useSettings } from '@/context/SettingsContext'
 import { RefsProvider } from '@/context/sharedRefs'
 import { ToolProvider } from '@/context/ToolContext'
 import Toolbar from '@/components/toolbar/Toolbar';
+import ToggleInfiniteCanvas from '@/components/canvas/ToggleInfiniteCanvas';
 export default function Layout({ children }: any) {
     const [isExpanded, setIsExpanded] = useState(true);
     const toggleExpand = () => {
@@ -33,9 +34,8 @@ export default function Layout({ children }: any) {
 
                         <CanvasProvider>
                             < Header />
-
-
                             {children}
+                            <ToggleInfiniteCanvas />
                             <Toolbar/>
 
 

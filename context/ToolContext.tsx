@@ -8,7 +8,7 @@ import type { ToolContextType,Tool} from "@/types/pdf";
 const ToolContext = createContext<ToolContextType | undefined>(undefined)
 
 export const ToolProvider = ({ children }: { children: ReactNode }) => {
-  const [selectedTool, setSelectedTool] = useState<Tool>('pen')
+  const [selectedTool, setSelectedTool] = useState<Tool>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [brushSize, setBrushSize] = useState(5)
   const [eraserSize, setEraserSize] = useState(5)

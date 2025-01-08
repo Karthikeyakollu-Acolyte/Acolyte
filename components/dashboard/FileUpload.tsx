@@ -22,7 +22,7 @@ const FileUpload = () => {
           alert('PDF file saved to IndexedDB!');
 
           // Navigate to the new note page after successful upload
-          router.push(`/note/${documentId}`); // Use next/navigation to navigate
+          router.push(`/pdfnote/${documentId}`); // Use next/navigation to navigate
         } catch (error) {
           console.error('Error saving PDF:', error);
           alert('Failed to save the PDF. Please try again.');
