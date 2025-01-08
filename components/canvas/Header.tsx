@@ -8,6 +8,11 @@ import acolyte from '@/public/acolyte.png'
 import frame from '@/public/frame.png'
 import { Collaborators } from "./collaborators"
 import SearchCompoent from '../pdfcomponents/SearchCompoent'
+import notifications from '@/public/notifications.svg'
+import search from '@/public/search.svg'
+import kebabmenu from '@/public/kebabmenu.svg'
+import brushmenu from '@/public/brushmenu.svg'
+import pdfsearch from '@/public/pdfsearch.svg'
 
 interface HeaderProps {
   title?: string
@@ -43,7 +48,6 @@ export default function Header({
 
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault()
-    // Handle search logic here, for now, we'll just log the search query
     console.log('Search Query:', searchQuery)
   }
 
@@ -67,79 +71,109 @@ export default function Header({
   }, [isSearchVisible])
 
   return (
-    <header className="flex items-center border-b p-1 font-sans bg-white">
-      <div className="flex w-[65vw] items-center gap-24">
-        <Image alt="acolyte" src={acolyte} className="h-28 w-28 ml-3" />
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-11">
-            <h1 className="text-2xl font-semibold">{title}</h1>
-            <div className="flex items-center gap-11 text-md text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <Image src={frame} alt="frame" className="h-4 w-4" />
-                <span>{pages} Pages</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Image src={frame} alt="frame" className="h-4 w-4" />
-                <span>{annotations} Annotations</span>
-              </div>
-            </div>
+    <header className="flex items-center w-[1920px] h-[89px] border-b p-1 font-sans bg-white">
+      <div className="flex w-full justify-between items-center font-rubik">
+        <div className='w-[563px] z-10 ml-3'>
+          <Image alt="acolyte" src={acolyte} className="h-28 w-28 ml-2" />
+        </div>
+
+        {/* Centered Title and Last Update Section */}
+        <div className="flex flex-col z-10 w-[286px] items-center justify-center gap-1">
+          <div className="flex items-center justify-center gap-11">
+            <span className="text-[20px] text-center">{title}</span>
           </div>
-          <p className="text-md text-muted-foreground">
+          <p className="text-[15px] w-[286px] font-rubik text-muted-foreground text-center">
             Last Update: {lastUpdate}
           </p>
         </div>
-      </div>
 
-      <div className="flex w-[30vw] items-center gap-5">
-        <Collaborators />
+        <div className="flex justify-start mr-4 z-10 items-center gap-5">
+          <Collaborators />
 
-        {/* <Button
-          variant="ghost"
-          className="text-muted-foreground hover:text-foreground custom-button"
-        >
-          <Bell className="custom-icon" />
-        </Button> */}
+          <Image
+            loading="lazy"
+            src={brushmenu}
+            alt="Navigation icon"
+            className="object-contain w-[59.24px] h-[35.88px] aspect-[1.64] mr-2"
+          />
 
-        {/* Search Button */}
-        {/* <Button
-          variant="ghost"
-          className="text-muted-foreground hover:text-foreground custom-button"
-          onClick={toggleSearch} // Toggle search visibility on click
-        >
-          <Search className="custom-icon" />
-        </Button> */}
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground custom-button"
+          >
+            <Image
+              loading="lazy"
+              src={notifications}
+              alt="Notifications"
+              className="object-contain w-[31.68px] h-[31.68px] aspect-square"
+            />
+          </Button>
 
-        {/* <Button
-          variant="ghost"
-          className="text-muted-foreground hover:text-foreground custom-button"
-        >
-          <MoreVertical className="custom-icon" />
-        </Button> */}
+          {/* Search Button */}
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground custom-button"
+            onClick={toggleSearch} // Toggle search visibility on click
+          >
+            <Image
+              loading="lazy"
+              src={search}
+              alt="Notifications"
+              className="object-contain w-[31.68px] h-[31.68px] aspect-square"
+            />
+          </Button>
+
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground custom-button"
+          >
+            <Image
+              loading="lazy"
+              src={kebabmenu}
+              alt="User profile"
+              className="object-contain w-[31.68px] h-[31.68px] aspect-[0.97]"
+            />
+          </Button>
+        </div>
       </div>
 
       {/* Search Bar */}
-      {/* {isSearchVisible && (
-       <div className=''>
-         <div ref={searchBarRef} className="fixed top-32 left-0 right-0 flex justify-center z-50 mt-4">
-          <form
-            className="w-full max-w-3xl relative"
-            onSubmit={handleSearchSubmit} // Handle form submission
+      {isSearchVisible && (
+        <div>
+          <div
+            ref={searchBarRef}
+            className="fixed top-32 left-0 right-0 flex justify-center z-50 mt-4"
           >
-            <input
-              ref={searchInputRef} // Reference the search input to focus it
-              type="text"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              placeholder="Search..."
-              className="w-full py-2 px-4 rounded-full shadow-md border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-              onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit(e)} // Handle Enter key to submit
-            />
-          </form>
-        </div>
-       </div>
-      )} */}
+            <form
+              className="w-[850px] relative group"
+              onSubmit={handleSearchSubmit} // Handle form submission
+            >
+              <div className="relative w-full h-[43px] group-hover:h-[68px] bg-white rounded-[18px] shadow-lg border border-gray-300 overflow-hidden transition-all duration-300 ease-in-out">
+                {/* Search Icon */}
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 ml-4">
+                  <Image src={pdfsearch} alt="Search Icon" width={16} height={16} />
+                </div>
 
-      <SearchCompoent />
+                {/* Search Input */}
+                <input
+                  ref={searchInputRef} // Reference the search input to focus it
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder={isSearchVisible ? "Spotlight search" : "Spotlight search"}
+                  className="w-full py-2 pl-16 pr-4 font-rubik text-[20px] text-black focus:outline-none h-[43px] transition-colors duration-300"
+                  onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit(e)} // Handle Enter key to submit
+                />
+                {/* Additional Placeholder Area */}
+                <div className="absolute top-[40px] pl-16 w-full text-black text-[15px] px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Ask acolyte?
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </header>
   )
 }

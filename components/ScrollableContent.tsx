@@ -14,7 +14,7 @@ export default function ScrollableContent({ isExpanded,id }: ScrollableContentPr
   
 
   return (
-    <div className={`mt-8  transition-all  duration-300 ease-in-out overflow-hidden  ${
+    <div className={`mt-8 transition-all  duration-300 ease-in-out overflow-hidden  ${
       !isExpanded ? 'w-full' : 'w-full '
     }`}>
       <div 
